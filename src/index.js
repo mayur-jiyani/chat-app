@@ -12,25 +12,17 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
-// app.get('/', (req, res) => {
-//     res.render('index', {
-//         title: 'Weather',
-//         name: 'mayur jiyani'
-//     })
-// })
-
-let count = 0
 
 io.on('connection', (socket) => {
     console.log('new websocket connection');
 
-    socket.emit('countUpdated', count)
+    socket.emit('message', 'welcome')
 
-    socket.on('increment', () => {
-        count++
-        // socket.emit('countUpdated', count)
-        io.emit('countUpdated', count)
+    socket.on('sendMessage', (message) => {
+        io.emit('message', message)
     })
+
+
 })
 
 server.listen(port, () => {
