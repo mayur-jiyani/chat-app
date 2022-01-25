@@ -13,15 +13,17 @@ const locationMessagesTemplate = document.querySelector('#location-message-templ
 socket.on('message', (message) => {
     console.log(message);
     const html = Mustache.render(messagesTemplate, {
-        message
+        message: message.text,
+        createdAt: moment(message.createdAt).format('h:mm a')
     })
     $messages.insertAdjacentHTML('beforeend', html)
 })
 
-socket.on('locationMessage', (url) => {
-    console.log(url);
+socket.on('locationMessage', (message) => {
+    console.log(message);
     const html = Mustache.render(locationMessagesTemplate, {
-        url
+        url: message.url,
+        createdAt: moment(message.createdAt).format('h:mm a')
     })
     $messages.insertAdjacentHTML('beforeend', html)
 })
